@@ -1,0 +1,11 @@
+<!--Example using petite-vue-->
+
+<script src="https://unpkg.com/petite-vue" defer init></script>
+
+
+<h1>Cognitive Load App</h1>
+<!-- anywhere on the page -->
+<div v-scope="{ count: 0 }">
+  {{ count }}
+  <button @click="count++">inc</button>
+</div>
