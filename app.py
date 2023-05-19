@@ -4,6 +4,8 @@ import random
 app= Flask(__name__)
 lower_limit= 0
 upper_limit= 100
+# Define a list to store the conversation history
+conversation = []
 
 @app.route("/")
 def home():
@@ -49,9 +51,6 @@ def fetch_random_question():
     rand_question= random.choice(question_list)
 
     return rand_question
-
-# Define a list to store the conversation history
-conversation = []
 
 @app.route('/get_question', methods=['GET'])
 def get_question():
