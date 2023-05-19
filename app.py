@@ -36,16 +36,21 @@ def stroop():
 
 @app.route("/texting_questions", methods=["GET"])
 def fetch_random_question():
-    question_list=["How are you doing today?",
-                   "How is the weather outside?",
-                   "Greetings, eleke",
-                   "monday",
-                   "tuesday",
-                   "wednesday",
-                   "thursday",
-                   "friday",
-                   "saturday",
-                   "sunday"
+    question_list=["How are you today?",
+                   "What’s new?",
+                   "How’s work/school going?",
+                   "How’s the weather treating you?",
+                   "Any upcoming vacation plans?",
+                   "Any plans for the weekend?",
+                   "Have you travelled anywhere interesting recently?",
+                   "Where would you like to travel?",
+                   "Are you going to see any concerts?",
+                   "What concerts would you like to see?",
+                   "Have you seen any good movies recently?",
+                   "Anything in theatres that you want to see or are looking forward to?",
+                   "Are you watching any good shows right now?",
+                   "Have you read any good books lately?",
+                   "What’s your favourite book?"
                    ]
     
     rand_question= random.choice(question_list)
