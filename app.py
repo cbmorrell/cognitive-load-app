@@ -11,18 +11,18 @@ def home():
 
 @app.route("/addition")
 def addition():
-    return render_template("addition_test.html")
+    return render_template("addition_new.html")
 
-@app.route('/get_numbers_and_sum', methods=['GET'])
+@app.route('/get_numbers', methods=['GET'])
 def get_numbers_and_sum():
     # Retrieve the numbers and sum from your data source or perform any necessary calculations
     num1 = random.randint(lower_limit, upper_limit)
     num2 = random.randint(lower_limit, upper_limit)
 
-    result= num1+num2
+    sum= num1+num2
 
     # Return the numbers as a JSON response
-    return jsonify({'num1': num1, 'num2': num2, 'result': result})
+    return jsonify({'num1': num1, 'num2': num2})
 
 @app.route("/n_back")
 def nback():
