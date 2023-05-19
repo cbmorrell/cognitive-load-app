@@ -2,16 +2,21 @@
 
 <div>
     <p id="prompt">Text</p>
-    <button id="left-button">Text</button>
-    <button id="right-button">Text</button>
+    <p id="score">Text</p>
+    <button id="left-button" onclick="leftButtonClicked()">Text</button>
+    <button id="right-button" onclick="rightButtonClicked()">Text</button>
 </div>
 
 <script>
     /*
     Display text that either says "Blue" or "Red". 
     The colour of the font is randomly chosen, so it does not always match up with the text.
+    The users should select the button whose text describes the color of the prompt at the top of the screen.
     */
     const colors = ['blue', 'red'];
+    let score = 0;  // score count
+
+    setAllElements();
     
     function setTextElementProperties(id, text, color) {
         const getRandomColorIndex = () => {
@@ -32,14 +37,52 @@
 
         return [text, color];
     }
-    
-    setTextElementProperties("prompt");
-    left_button_properties = setTextElementProperties("left-button");
 
-    // Set right button based on left button properties
-    text = left_button_properties[0] === colors[0] ? colors[1].toUpperCase() : colors[0].toUpperCase();   // set text opposite of left button
-    color = left_button_properties[1] === colors[0] ? colors[1] : colors[0];     // set color opposite of left button
-    setTextElementProperties("right-button", text, color);
+    function setAllElements() {
+        setTextElementProperties("score", score.toString());
+
+        // Set prompt and left button randomly
+        prompt_properties = setTextElementProperties("prompt");
+        left_button_properties = setTextElementProperties("left-button");
+    
+        // Set right button based on left button properties
+        right_button_text = left_button_properties[0] === colors[0] ? colors[1].toUpperCase() : colors[0].toUpperCase();   // set text opposite of left button
+        right_button_color = left_button_properties[1] === colors[0] ? colors[1] : colors[0];     // set color opposite of left button
+        setTextElementProperties("right-button", right_button_text, right_button_color);
+    
+        // Determine the correct button that the user should press
+        correctButtonId = right_button_text === prompt_properties[1] ? 'right-button' : 'left-button';
+
+        return correctButtonId;
+    }
+
+
+    function correctButtonWasClicked(buttonId) {
+        promptColor = document.getElementById("prompt").style.color;
+        button_text = document.getElementById(buttonId).innerHTML.toLowerCase();
+        return promptColor === button_text;
+    }
+    
+
+    function leftButtonClicked() {
+        if (correctButtonWasClicked("left-button")) {
+            score++;
+        } else {
+            score--;
+        }
+        setAllElements();   // reset elements
+    }
+
+    function rightButtonClicked() {
+        if (correctButtonWasClicked("right-button")) {
+            score++;
+        } else {
+            score--;
+        }
+
+        setAllElements();   // reset elements
+    }
+
 
 
 </script>
