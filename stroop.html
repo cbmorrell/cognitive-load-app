@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Stroop Test</title>
+    </head>
+    <body>
+        <h1>STROOP Test</h1>
+        <h2>
+            This is a test displaying the Stroop effect. Please select the button whose text describes the font color of the prompt 
+            (i.e., if the prompt's font colour is blue, select the button that says "blue"). Your score will increase and decrease
+            depending on if the correct button was pressed.
+        </h2>
+        <div>
+            <p id="score" style="font-size:medium;">Text</p>
+            <p id="prompt" style="font-size: larger;">Text</p>
+            <button id="left-button" onclick="leftButtonClicked()">Text</button>
+            <button id="right-button" onclick="rightButtonClicked()">Text</button>
+        </div>
+        
+        <script>
+            /*
+            Display text that either says "Blue" or "Red". 
+            The colour of the font is randomly chosen, so it does not always match up with the text.
+            The users should select the button whose text describes the color of the prompt at the top of the screen.
+            */
+            const colors = ['blue', 'red'];
+            let score = 0;  // score count
+        
+            setAllElements();   // initially set all elements
+            
+            function setTextElementProperties(id, text, color) {
+                const getRandomColorIndex = () => {
+                    return Math.floor(Math.random() * colors.length);
+                }
+                if (text === undefined) {
+                    const random_word_idx = getRandomColorIndex(); // get random integer to select word to display
+                    text = colors[random_word_idx];
+                }
+        
+                if (color === undefined) {
+                    const random_font_color_idx = getRandomColorIndex();   // get random integer to select font colour
+                    color = colors[random_font_color_idx];
+                }
+        
+                document.getElementById(id).innerHTML = text.toUpperCase();
+                document.getElementById(id).style.color = color;
+        
+                return [text, color];
+            }
+        
+            function setAllElements() {
+                setTextElementProperties("score", `Score: ${score.toString()}`);
+        
+                // Set prompt and left button randomly
+                promptProperties = setTextElementProperties("prompt");
+                leftButtonProperties = setTextElementProperties("left-button");
+            
+                // Set right button based on left button properties
+                rightButtonText = leftButtonProperties[0] === colors[0] ? colors[1].toUpperCase() : colors[0].toUpperCase();   // set text opposite of left button
+                rightButtonColor = leftButtonProperties[1] === colors[0] ? colors[1] : colors[0];     // set color opposite of left button
+                setTextElementProperties("right-button", rightButtonText, rightButtonColor);
+            
+                // Determine the correct button that the user should press
+                correctButtonId = rightButtonText === promptProperties[1] ? 'right-button' : 'left-button';
+        
+                return correctButtonId;
+            }
+        
+        
+            function correctButtonWasClicked(buttonId) {
+                promptColor = document.getElementById("prompt").style.color;
+                button_text = document.getElementById(buttonId).innerHTML.toLowerCase();
+                return promptColor === button_text;
+            }
+            
+        
+            function leftButtonClicked() {
+                if (correctButtonWasClicked("left-button")) {
+                    score++;
+                } else {
+                    score--;
+                }
+                setAllElements();   // reset elements
+            }
+        
+            function rightButtonClicked() {
+                if (correctButtonWasClicked("right-button")) {
+                    score++;
+                } else {
+                    score--;
+                }
+        
+                score = score <= 0 ? 0 : score; // stop score from displaying negative numbers
+        
+                setAllElements();   // reset elements
+            }
+        </script>
+    </body>
+</html>
+
+
+
