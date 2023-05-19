@@ -13,16 +13,33 @@
     */
     const colors = ['blue', 'red'];
     
-    function setTextElementProperties(id) {
-        const random_font_color_idx = Math.floor(Math.random() * colors.length);   // get random integer to select font colour
-        const random_word_idx = Math.floor(Math.random() * colors.length); // get random integer to select word to display
-        document.getElementById(id).innerHTML = colors[random_word_idx].toUpperCase()
-        document.getElementById(id).style.color = colors[random_font_color_idx];
+    function setTextElementProperties(id, text, color) {
+        const getRandomColorIndex = () => {
+            return Math.floor(Math.random() * colors.length);
+        }
+        if (text === undefined) {
+            const random_word_idx = getRandomColorIndex(); // get random integer to select word to display
+            text = colors[random_word_idx];
+        }
+
+        if (color === undefined) {
+            const random_font_color_idx = getRandomColorIndex();   // get random integer to select font colour
+            color = colors[random_font_color_idx];
+        }
+
+        document.getElementById(id).innerHTML = text.toUpperCase();
+        document.getElementById(id).style.color = color;
+
+        return [text, color];
     }
     
     setTextElementProperties("prompt");
-    setTextElementProperties("left-button");
-    setTextElementProperties("right-button");
+    left_button_properties = setTextElementProperties("left-button");
+
+    // Set right button based on left button properties
+    text = left_button_properties[0] === colors[0] ? colors[1].toUpperCase() : colors[0].toUpperCase();   // set text opposite of left button
+    color = left_button_properties[1] === colors[0] ? colors[1] : colors[0];     // set color opposite of left button
+    setTextElementProperties("right-button", text, color);
+
 
 </script>
-
