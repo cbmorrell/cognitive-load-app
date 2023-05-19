@@ -9,7 +9,7 @@ conversation = []
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", task1= "/addition", task2="/texting", task3="/stroop", task4="/n_back", task5="/reading")
 
 @app.route('/get_numbers', methods=['GET'])
 def get_numbers():
