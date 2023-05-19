@@ -44,16 +44,16 @@ depending on if the correct button was pressed.</h2>
         setTextElementProperties("score", `Score: ${score.toString()}`);
 
         // Set prompt and left button randomly
-        prompt_properties = setTextElementProperties("prompt");
-        left_button_properties = setTextElementProperties("left-button");
+        promptProperties = setTextElementProperties("prompt");
+        leftButtonProperties = setTextElementProperties("left-button");
     
         // Set right button based on left button properties
-        right_button_text = left_button_properties[0] === colors[0] ? colors[1].toUpperCase() : colors[0].toUpperCase();   // set text opposite of left button
-        right_button_color = left_button_properties[1] === colors[0] ? colors[1] : colors[0];     // set color opposite of left button
-        setTextElementProperties("right-button", right_button_text, right_button_color);
+        rightButtonText = leftButtonProperties[0] === colors[0] ? colors[1].toUpperCase() : colors[0].toUpperCase();   // set text opposite of left button
+        rightButtonColor = leftButtonProperties[1] === colors[0] ? colors[1] : colors[0];     // set color opposite of left button
+        setTextElementProperties("right-button", rightButtonText, rightButtonColor);
     
         // Determine the correct button that the user should press
-        correctButtonId = right_button_text === prompt_properties[1] ? 'right-button' : 'left-button';
+        correctButtonId = rightButtonText === promptProperties[1] ? 'right-button' : 'left-button';
 
         return correctButtonId;
     }
