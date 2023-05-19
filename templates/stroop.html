@@ -1,2 +1,28 @@
-<h1>STROOP Test</h1>
+<h1 style="color:blue">STROOP Test</h1>
+
+<div>
+    <p id="prompt">Text</p>
+    <button id="left-button">Text</button>
+    <button id="right-button">Text</button>
+</div>
+
+<script>
+    /*
+    Display text that either says "Blue" or "Red". 
+    The colour of the font is randomly chosen, so it does not always match up with the text.
+    */
+    const colors = ['blue', 'red'];
+    
+    function setTextElementProperties(id) {
+        const random_font_color_idx = Math.floor(Math.random() * colors.length);   // get random integer to select font colour
+        const random_word_idx = Math.floor(Math.random() * colors.length); // get random integer to select word to display
+        document.getElementById(id).innerHTML = colors[random_word_idx].toUpperCase()
+        document.getElementById(id).style.color = colors[random_font_color_idx];
+    }
+    
+    setTextElementProperties("prompt");
+    setTextElementProperties("left-button");
+    setTextElementProperties("right-button");
+
+</script>
 
