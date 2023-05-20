@@ -4,18 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Stroop Test</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/slate/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <h1 class="text-center">Stroop Test</h1>
-        <h2 class="text-center">
+        <p class="text-center">
             This is a test displaying the Stroop effect. Please select the button whose text describes the font color of the prompt 
             (i.e., if the prompt's font colour is blue, select the button that says "blue"). Your score will increase and decrease
             depending on if the correct button was pressed.
-        </h2>
+        </p>
         <div class="text-center">
-            <p id="score" style="font-size:medium;">Text</p>
-            <p id="prompt" style="font-size: larger;">Text</p>
+            <h3 id="score">Text</h3>
+            <h4 id="prompt">Text</h4>
             <button id="left-button" onclick="leftButtonClicked()">Text</button>
             <button id="right-button" onclick="rightButtonClicked()">Text</button>
         </div>
@@ -52,7 +52,7 @@
             }
         
             function setAllElements() {
-                setTextElementProperties("score", `Score: ${score.toString()}`);
+                document.getElementById("score").innerHTML = `Score: ${score.toString()}`;  // set score without modifying colour
         
                 // Set prompt and left button randomly
                 promptProperties = setTextElementProperties("prompt");
