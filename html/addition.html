@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Addition Test</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <h1 class="text-center">Addition Test</h1>
+
+        <div id="container" class="text-center">
+            <div id="question" class="text-center">Question: <span id="num1"></span> + <span id="num2"></span></div>
+            <div id="answer">
+                <form id="answer-form">
+                    Your Answer: <input type="text" id="user-answer">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div id="result"></div>
+            <div id="score">Score: <span id="correct-count">0</span>/<span id="total-count">0</span></div>
+            <div id="summary"></div>
+            <div class="text-center">
+                <button id="restart-button" onclick="restartGame()">Restart Game</button>
+            </div>
+        </div>
+
+        <script>
+            var correctCount = 0;
+            var totalCount = 0;
+            var startTime = Math.floor(Date.now() / 1000);
+            var timer;
+            
+            function getRandomNumbers() {                
+                // Generate two random numbers
+                const lowerLimit = 0;
+                const upperLimit = 100;
+                const num1 = Math.floor(Math.random() * upperLimit) + lowerLimit;
+                const num2 = Math.floor(Math.random() * upperLimit) + lowerLimit;
+
+                document.getElementById('num1').textContent = num1;
+                document.getElementById('num2').textContent = num2;
+                
+            }
+            
+            function updateScore() {
+                document.getElementById('correct-count').textContent = correctCount;
+                document.getElementById('total-count').textContent = totalCount;
+            }
+            
+            function updateResultMessage(isCorrect) {
+                var resultElement = document.getElementById('result');
+                resultElement.textContent = isCorrect ? 'Correct!' : 'Wrong!';
+                resultElement.style.color = isCorrect ? 'green' : 'red';
+            }
+            
+            function resetQuiz() {
+                document.getElementById('user-answer').value = '';
+                document.getElementById('result').textContent = '';
+                getRandomNumbers();
+            }
+            
+            function handleFormSubmit(event) {
+                event.preventDefault();
+                var userAnswer = parseInt(document.getElementById('user-answer').value);
+                var num1 = parseInt(document.getElementById('num1').textContent);
+                var num2 = parseInt(document.getElementById('num2').textContent);
+                var expectedSum = num1 + num2;
+                
+                totalCount++;
+                
+                if (userAnswer === expectedSum) {
+                    correctCount++;
+                    updateResultMessage(true);
+                } else {
+                    updateResultMessage(false);
+                }
+                
+                updateScore();
+                resetQuiz()
+                
+                if (totalCount === 10) {
+                    clearInterval(timer);
+                    showSummary();
+                }
+            }
+            
+            function startTimer() {
+                timer = setInterval(function() {
+                    var currentTime = Math.floor(Date.now() / 1000);
+                    var elapsedTime = currentTime - startTime;
+                    
+                    if (elapsedTime >= 100) {
+                        clearInterval(timer);
+                        showSummary();
+                    }
+                }, 1000);
+            }
+            
+            function showSummary() {
+                var accuracy = (correctCount / totalCount) * 100;
+                var summaryElement = document.getElementById('summary');
+                summaryElement.style.display = 'block';
+                summaryElement.style.fontWeight = 'bold';
+                
+                if (accuracy >= 90) {
+                    summaryElement.textContent = 'Outstanding!';
+                    summaryElement.style.color = 'green';
+                } else if (accuracy >= 70) {
+                    summaryElement.textContent = 'Good!';
+                    summaryElement.style.color = 'blue';
+                } else if (accuracy >= 30) {
+                    summaryElement.textContent = 'Satisfactory!';
+                    summaryElement.style.color = 'orange';
+                } else {
+                    summaryElement.textContent = 'Poor!';
+                    summaryElement.style.color = 'red';
+                }
+                
+                document.getElementById('restart-button').style.visibility = 'visible';
+            }
+            
+            function restartGame() {
+                correctCount = 0;
+                totalCount = 0;
+                startTime = Math.floor(Date.now() / 1000);
+                document.getElementById('summary').textContent = '';
+                document.getElementById('summary').style.display = 'none';
+                document.getElementById('summary').style.color = '';
+                document.getElementById('restart-button').style.visibility = 'hidden';
+                updateScore();
+                resetQuiz();
+                startTimer();
+            }
+            
+            document.getElementById('answer-form').addEventListener('submit', handleFormSubmit);
+            getRandomNumbers();
+            startTimer();
+        </script>
+    </body>
+</html>
