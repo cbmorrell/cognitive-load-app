@@ -21,7 +21,9 @@
             <div id="result"></div>
             <div id="score">Score: <span id="correct-count">0</span>/<span id="total-count">0</span></div>
             <div id="summary"></div>
-            <button id="restart-button" onclick="restartGame()" class="text-center">Restart Game</button>
+            <div class="text-center">
+                <button id="restart-button" onclick="restartGame()">Restart Game</button>
+            </div>
         </div>
 
         <script>
@@ -116,7 +118,7 @@
                     summaryElement.style.color = 'red';
                 }
                 
-                document.getElementById('restart-button').style.display = 'block';
+                document.getElementById('restart-button').style.visibility = 'visible';
             }
             
             function restartGame() {
@@ -126,7 +128,7 @@
                 document.getElementById('summary').textContent = '';
                 document.getElementById('summary').style.display = 'none';
                 document.getElementById('summary').style.color = '';
-                document.getElementById('restart-button').style.display = 'none';
+                document.getElementById('restart-button').style.visibility = 'hidden';
                 updateScore();
                 resetQuiz();
                 startTimer();
