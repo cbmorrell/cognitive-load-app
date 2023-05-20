@@ -30,13 +30,16 @@
             var startTime = Math.floor(Date.now() / 1000);
             var timer;
             
-            function getRandomNumbers() {
-                fetch('/get_numbers')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('num1').textContent = data.num1;
-                        document.getElementById('num2').textContent = data.num2;
-                    });
+            function getRandomNumbers() {                
+                // Generate two random numbers
+                const lowerLimit = 0;
+                const upperLimit = 100;
+                const num1 = Math.floor(Math.random() * upperLimit) + lowerLimit;
+                const num2 = Math.floor(Math.random() * upperLimit) + lowerLimit;
+
+                document.getElementById('num1').textContent = num1;
+                document.getElementById('num2').textContent = num2;
+                
             }
             
             function updateScore() {
