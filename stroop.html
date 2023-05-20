@@ -4,19 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Stroop Test</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <h1>STROOP Test</h1>
-        <h2>
+        <h1 class="text-center">Stroop Test</h1>
+        <p class="text-center">
             This is a test displaying the Stroop effect. Please select the button whose text describes the font color of the prompt 
             (i.e., if the prompt's font colour is blue, select the button that says "blue"). Your score will increase and decrease
             depending on if the correct button was pressed.
-        </h2>
-        <div>
-            <p id="score" style="font-size:medium;">Text</p>
-            <p id="prompt" style="font-size: larger;">Text</p>
-            <button id="left-button" onclick="leftButtonClicked()">Text</button>
-            <button id="right-button" onclick="rightButtonClicked()">Text</button>
+        </p>
+        <div class="text-center">
+            <h3 class="mt-3" id="score">Text</h3>
+            <h4 class="mt-4" id="prompt">Text</h4>
+            <button class="mt-5" id="left-button" onclick="leftButtonClicked()">Text</button>
+            <button class="mt-5" id="right-button" onclick="rightButtonClicked()">Text</button>
         </div>
         
         <script>
@@ -51,7 +52,7 @@
             }
         
             function setAllElements() {
-                setTextElementProperties("score", `Score: ${score.toString()}`);
+                document.getElementById("score").innerHTML = `Score: ${score.toString()}`;  // set score without modifying colour
         
                 // Set prompt and left button randomly
                 promptProperties = setTextElementProperties("prompt");
@@ -82,6 +83,9 @@
                 } else {
                     score--;
                 }
+
+                score = score <= 0 ? 0 : score; // stop score from displaying negative numbers
+
                 setAllElements();   // reset elements
             }
         
@@ -99,6 +103,3 @@
         </script>
     </body>
 </html>
-
-
-
