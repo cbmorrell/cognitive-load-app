@@ -83,6 +83,9 @@
                 } else {
                     score--;
                 }
+
+                score = score <= 0 ? 0 : score; // stop score from displaying negative numbers
+
                 setAllElements();   // reset elements
             }
         
@@ -100,6 +103,3 @@
         </script>
     </body>
 </html>
-
-
-
