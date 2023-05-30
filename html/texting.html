@@ -1,25 +1,67 @@
 <!DOCTYPE html>
 <html>
+    <!--JavaScript and styling inspired by https://github.com/codewelltech/chatbot-css-js-1/tree/main-->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Texting Task</title>
         <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css" rel="stylesheet">
     </head>
+    <style>
+        .chat-body {
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 10px;
+            align-items: flex-end;
+            overflow-y: auto;
+        }
+        .chat-input {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ccc;
+        }
+        .container {
+            --light-color: #fff;
+            height: 420px;
+            width: 350px;
+            background: var(--light-color);
+            bottom: 100px;
+            right: 10px;
+            box-shadow: 0px 0px 15px 0px black;
+        }
+    </style>
     <body>
         <h1 class="text-center">Texting Task</h1>
         <p class="text-center">
             Please answer the questions to simulate having a simple conversation via text.
         </p>
-        <div class="text-center">
-            <h3 class="mt-3" id="score">Text</h3>
-            <h4 class="mt-4" id="prompt">Text</h4>
-            <button class="mt-5" id="left-button" onclick="leftButtonClicked()">Text</button>
-            <button class="mt-5" id="right-button" onclick="rightButtonClicked()">Text</button>
+        <div>
+            <div class="container">
+                <div class="chat-body"></div>
+                <div class="chat-input">
+                  <div class="input-sec">
+                    <input type="text" id="txtInput" placeholder="Type here" autofocus />
+                  </div>
+                </div>
+              </div>
+
         </div>
         
         <script>
-            
+
+            function addChatMessage(input) {
+                const messagesContainer = document.getElementById("chat-body");
+                let userDiv = document.createElement("div");
+                userDiv.id = "user";
+                userDiv.className = "user response";
+                userDiv.innerHTML = `${input}`;
+                messagesContainer.appendChild(userDiv);
+
+            }
+
+
         </script>
     </body>
 </html>
