@@ -39,26 +39,33 @@
         </p>
         <div>
             <div class="container">
-                <div class="chat-body"></div>
+                <div class="chat-body" id="chat-body"></div>
                 <div class="chat-input">
                   <div class="input-sec">
-                    <input type="text" id="txtInput" placeholder="Type here" autofocus />
+                    <input type="text" id="text-input" placeholder="Type answer..." autofocus />
+                    <button id="send-button">Send</button>
                   </div>
                 </div>
-              </div>
-
+            </div>
         </div>
         
         <script>
+            // Get UI elements
+            const chatBody = document.getElementById("chat-body")
+            const sendButton = document.getElementById("send-button");
+            const inputText = document.getElementById("text-input");
+            sendButton.addEventListener("click", () => {
+                const textInput = inputText.value;
+                console.log(textInput)
+                addChatMessage(textInput);
+            })
 
+            
             function addChatMessage(input) {
-                const messagesContainer = document.getElementById("chat-body");
-                let userDiv = document.createElement("div");
-                userDiv.id = "user";
-                userDiv.className = "user response";
-                userDiv.innerHTML = `${input}`;
-                messagesContainer.appendChild(userDiv);
-
+                const messageBox = document.createElement("div");
+                const node = document.createTextNode(input);
+                messageBox.append(node);
+                chatBody.append(messageBox);
             }
 
 
