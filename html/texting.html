@@ -85,6 +85,11 @@
                 const chatResponse = getRandomChatResponse()
                 addChatMessage(chatResponse);
 
+                // Set scroll position
+                if (chatBody.scrollHeight > 0) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+
                 // Erase text input
                 inputText.value = "";
 
