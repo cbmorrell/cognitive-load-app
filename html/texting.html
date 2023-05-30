@@ -50,7 +50,7 @@
         </div>
         
         <script>
-            const chatbotResponses = [
+            const chatResponses = [
             "How are you today?",
             "What’s new?",
             "How’s work/school going?",
@@ -67,20 +67,24 @@
             "Have you read any good books lately?",
             "What’s your favourite book?"
             ];
+            let previousResponseIdx = 0;
             // Get UI elements
             const chatBody = document.getElementById("chat-body")
             const sendButton = document.getElementById("send-button");
             const inputText = document.getElementById("text-input");
 
+            // Initialize message container
+            addChatMessage(chatResponses[previousResponseIdx]);
 
             sendButton.addEventListener("click", () => {
                 // Render user message
                 const textInput = inputText.value;
                 addChatMessage(textInput);
                 
-                // Render chatbot response
-                const randomResponseIdx = Math.floor(Math.random() * chatbotResponses.length);
-                addChatMessage(chatbotResponses[randomResponseIdx]);
+                // Render chat response
+                const chatResponse = getRandomChatResponse()
+                addChatMessage(chatResponse);
+
             })
 
             function addChatMessage(input) {
@@ -88,6 +92,15 @@
                 const node = document.createTextNode(input);
                 messageBox.append(node);
                 chatBody.append(messageBox);
+            }
+
+            function getRandomChatResponse() {
+                // Generate a random index that is different from the previous response
+                let randomResponseIdx = previousResponseIdx;
+                while (previousResponseIdx === randomResponseIdx) {
+                    randomResponseIdx = Math.floor(Math.random() * chatResponses.length);
+                }
+                return chatResponses[randomResponseIdx];
             }
 
 
