@@ -50,17 +50,39 @@
         </div>
         
         <script>
+            const chatbotResponses = [
+            "How are you today?",
+            "What’s new?",
+            "How’s work/school going?",
+            "How’s the weather treating you?",
+            "Any upcoming vacation plans?",
+            "Any plans for the weekend?",
+            "Have you travelled anywhere interesting recently?",
+            "Where would you like to travel?",
+            "Are you going to see any concerts?",
+            "What concerts would you like to see?",
+            "Have you seen any good movies recently?",
+            "Anything in theatres that you want to see or are looking forward to?",
+            "Are you watching any good shows right now?",
+            "Have you read any good books lately?",
+            "What’s your favourite book?"
+            ];
             // Get UI elements
             const chatBody = document.getElementById("chat-body")
             const sendButton = document.getElementById("send-button");
             const inputText = document.getElementById("text-input");
+
+
             sendButton.addEventListener("click", () => {
+                // Render user message
                 const textInput = inputText.value;
-                console.log(textInput)
                 addChatMessage(textInput);
+                
+                // Render chatbot response
+                const randomResponseIdx = Math.floor(Math.random() * chatbotResponses.length);
+                addChatMessage(chatbotResponses[randomResponseIdx]);
             })
 
-            
             function addChatMessage(input) {
                 const messageBox = document.createElement("div");
                 const node = document.createTextNode(input);
