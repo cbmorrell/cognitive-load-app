@@ -23,13 +23,26 @@
             border-top: 1px solid #ccc;
         }
         .container {
-            --light-color: #fff;
             height: 420px;
             width: 350px;
-            background: var(--light-color);
+            background: white;
             bottom: 100px;
             right: 10px;
             box-shadow: 0px 0px 15px 0px black;
+        }
+        .user-message {
+            padding: 8px;
+            background: #0652c0;
+            color: white;
+            margin: 5px;
+            width: max-content;
+            border-radius: 10px 3px 10px 10px;
+        }
+        .bot-message {
+            background: #aaa;
+            color: white;
+            align-self: flex-start;
+            border-radius: 10px 10px 3px 10px;
         }
     </style>
     <body>
@@ -50,6 +63,9 @@
         </div>
         
         <script>
+            const TYPE_USER = "user";   // user message
+            const TYPE_BOT = "bot";     // bot message
+            // Chat responses
             const chatResponses = [
             "How are you today?",
             "What’s new?",
@@ -79,11 +95,11 @@
             sendButton.addEventListener("click", () => {
                 // Render user message
                 const textInput = inputText.value;
-                addChatMessage(textInput);
+                addChatMessage(textInput, TYPE_USER);
                 
                 // Render chat response
                 const chatResponse = getRandomChatResponse()
-                addChatMessage(chatResponse);
+                addChatMessage(chatResponse, "bot");
 
                 // Set scroll position
                 if (chatBody.scrollHeight > 0) {
@@ -92,12 +108,17 @@
 
                 // Erase text input
                 inputText.value = "";
-
             })
 
-            function addChatMessage(input) {
+            function addChatMessage(input, type) {
+                // Create text node
                 const messageBox = document.createElement("div");
                 const node = document.createTextNode(input);
+
+                // Assign CSS styles based on if message is from user
+                const messageClassName = type === TYPE_USER ? "user-message" : "bot-message";
+                messageBox.classList.add(messageClassName)
+
                 messageBox.append(node);
                 chatBody.append(messageBox);
             }
