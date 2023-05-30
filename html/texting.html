@@ -85,6 +85,9 @@
                 const chatResponse = getRandomChatResponse()
                 addChatMessage(chatResponse);
 
+                // Erase text input
+                inputText.value = "";
+
             })
 
             function addChatMessage(input) {
