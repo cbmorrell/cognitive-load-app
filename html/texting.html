@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <!--JavaScript and styling inspired by https://github.com/codewelltech/chatbot-css-js-1/tree/main-->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Texting Task</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <style>
+        .chat-body {
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 10px;
+            align-items: flex-end;
+            overflow-y: auto;
+        }
+        .chat-input {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ccc;
+        }
+        .container {
+            height: 420px;
+            width: 350px;
+            background: white;
+            bottom: 100px;
+            right: 10px;
+            box-shadow: 0px 0px 15px 0px black;
+        }
+        .user-message {
+            padding: 8px;
+            background: #0652c0;
+            color: white;
+            margin: 5px;
+            width: max-content;
+            border-radius: 10px 3px 10px 10px;
+        }
+        .bot-message {
+            background: #777;
+            color: white;
+            align-self: flex-start;
+            border-radius: 10px 10px 3px 10px;
+        }
+    </style>
+    <body>
+        <h1 class="text-center">Texting Task</h1>
+        <p class="text-center">
+            Please answer the questions to simulate having a simple conversation via text.
+        </p>
+        <div>
+            <div class="container">
+                <div class="chat-body" id="chat-body"></div>
+                <div class="chat-input">
+                  <div class="input-sec">
+                    <input type="text" id="text-input" placeholder="Type answer..." autofocus />
+                    <button id="send-button">Send</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            const TYPE_USER = "user";   // user message
+            const TYPE_BOT = "bot";     // bot message
+            // Chat responses
+            const chatResponses = [
+            "How are you today?",
+            "What’s new?",
+            "How’s work/school going?",
+            "How’s the weather treating you?",
+            "Any upcoming vacation plans?",
+            "Any plans for the weekend?",
+            "Have you travelled anywhere interesting recently?",
+            "Where would you like to travel?",
+            "Are you going to see any concerts?",
+            "What concerts would you like to see?",
+            "Have you seen any good movies recently?",
+            "Anything in theatres that you want to see or are looking forward to?",
+            "Are you watching any good shows right now?",
+            "Have you read any good books lately?",
+            "What’s your favourite book?"
+            ];
+            let previousResponseIdx = 0;
+            // Get UI elements
+            const chatBody = document.getElementById("chat-body")
+            const sendButton = document.getElementById("send-button");
+            const inputText = document.getElementById("text-input");
+
+            // Initialize message container
+            addChatMessage(chatResponses[previousResponseIdx]);
+
+            sendButton.addEventListener("click", () => {
+                // Render user message
+                const textInput = inputText.value;
+                addChatMessage(textInput, TYPE_USER);
+                
+                // Render chat response
+                const chatResponse = getRandomChatResponse()
+                addChatMessage(chatResponse, "bot");
+
+                // Set scroll position
+                if (chatBody.scrollHeight > 0) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+
+                // Erase text input
+                inputText.value = "";
+            })
+
+            function addChatMessage(input, type) {
+                // Create text node
+                const messageBox = document.createElement("div");
+                const node = document.createTextNode(input);
+
+                // Assign CSS styles based on if message is from user
+                const messageClassName = type === TYPE_USER ? "user-message" : "bot-message";
+                messageBox.classList.add(messageClassName)
+
+                messageBox.append(node);
+                chatBody.append(messageBox);
+            }
+
+            function getRandomChatResponse() {
+                // Generate a random index that is different from the previous response
+                let randomResponseIdx = previousResponseIdx;
+                while (previousResponseIdx === randomResponseIdx) {
+                    randomResponseIdx = Math.floor(Math.random() * chatResponses.length);
+                }
+                return chatResponses[randomResponseIdx];
+            }
+
+
+        </script>
+    </body>
+</html>
