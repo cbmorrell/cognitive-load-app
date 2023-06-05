@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Display a grid of cells. Light one of them up and play a sound.
-    Two buttons are displayed: "sound" or "position"
-    The user inputs if the sound or position stayed the same.
-    Repeat the process. Make sure either the sound or the position of the square are the same.
--->
 <html>
     <head>
         <meta charset="utf-8">
@@ -15,8 +9,26 @@
 
     <body>
         <h1 class="text-center">N-back Test</h1>
+        <p class="text-center">
+            This is a cognitive load task known as the n-back test. A new letter will be shown every couple of seconds. If the current letter matches the letter
+            n characters back, please select the 'Match' button.
+        </p>
+        <div class="card text-white bg-primary mb-3 text-center" style="max-width: 10rem; margin: auto;">
+            <div class="card-header">Current letter:</div>
+            <div class="card-body" id="character-display">X</div>
+            <button class="text-center">Match</button>
+        </div>
 
         <script>
+            /*
+            n-back test inspired by https://n-back.irockbunnylab.com/.
+            Every couple of seconds, show a new letter. The user should select the 'match' button once the current character matches the character 'n-back',
+            where n is the difficulty level of the test.
+            */
+
+
+
+
             
         </script>
     </body>
