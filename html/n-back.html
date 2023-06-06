@@ -17,6 +17,8 @@
             <div class="card-header">Current letter:</div>
             <div class="card-body" id="character-display">---</div>
             <button class="text-center" onclick="checkMatch()">Match</button>
+            <div class="card-footer" id="score">Score: 0</div>
+            <div class="card-footer" id="match-result"></div>
         </div>
 
         <script>
@@ -29,14 +31,17 @@
             // Not a native queue implementation in JS. Probably just use an array or something or use a simple class implementation
             let characterQueue = [];  // store sequence of characters shown to user
             let difficultyLevel = 1;  // level of difficulty (n in n-back)
-            const possibleCharacters = "ABCDEFG";    // possible characters to display to user
+            const possibleCharacters = "ABC";    // possible characters to display to user
             const intervalTime = 2500;  // amount of time between generation of new characters (milliseconds)
+            let score = 0;
+            const matchResultElement = document.getElementById("match-result");
 
             function delay(time) {
                 return new Promise(resolve => setTimeout(resolve, time));
             }
 
             async function generateNewCharacter() {
+                matchResultElement.style.visibility = "hidden";     // hide previous result
                 if (characterQueue.length >= difficultyLevel + 1) {
                     // If there are n characters in the queue, dequeue. This is done to make sure that unnecessary characters aren't stored over time.
                     characterQueue.shift()
@@ -57,10 +62,26 @@
                 // Check if current character matches character n-back (i.e., the first character in the queue matches the last)
                 const previousCharacter = characterQueue[characterQueue.length - difficultyLevel - 1];
                 const currentCharacter = characterQueue[characterQueue.length - 1];
-                console.log(previousCharacter === currentCharacter);
+                const correctMatch = previousCharacter === currentCharacter;
+
+                if (correctMatch) {
+                    score++;
+                    result = "Correct!"
+                } else {
+                    if (score > 0) {
+                        // Only decrement if score is greater than 0
+                        score--;
+                    }
+                    result = "Incorrect!"
+                }
+
+                // Update score and result message
+                document.getElementById("score").innerText = `Score: ${score}`
+                matchResultElement.innerText = result;
+                matchResultElement.style.visibility = "visible";
             }
             
-            // Set initial state
+            // Repeatedly generate a new character
             setInterval(() => {
                 generateNewCharacter();
             }, intervalTime);
