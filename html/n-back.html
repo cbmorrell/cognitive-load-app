@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>N-back Test</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/lux/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <h1 class="text-center">N-back Test</h1>
+        <p class="text-center">
+            This is a cognitive load task known as the n-back test. A new letter will be shown every couple of seconds. If the current letter matches the letter
+            n characters back, please select the 'Match' button.
+        </p>
+        
+        <div style="text-align: center;">
+            <form class="d-inline-block" style="display: inline-block;">
+                <label class="form-label d-inline-block" for="difficulty-select">Select difficulty:</label>
+                <select class="form-select form-control d-inline-block" style="width: auto" name="difficulty-select" id="difficulty-select">
+                    <option>1</option>
+                    <option>2</option>
+                </select>
+            </form>
+        </div>
+        
+        <div class="card text-white bg-primary mb-3 text-center mt-2" style="max-width: 10rem; margin: auto;">
+            <div class="card-header">Current letter:</div>
+            <div class="card-body" id="character-display">---</div>
+            <button class="text-center" onclick="checkMatch()">Match</button>
+            <div class="card-footer" id="score">Score: 0</div>
+            <div class="card-footer" id="match-result"></div>
+        </div>
+        
+        <div style="text-align: center;">
+            <button onclick="start()" id="start-button" class="text-center">Start</button>
+        </div>
+        <script>
+            /*
+            n-back test inspired by https://n-back.irockbunnylab.com/.
+            Every couple of seconds, show a new letter. The user should select the 'match' button once the current character matches the character 'n-back',
+            where n is the difficulty level of the test.
+            */
+
+            // Not a native queue implementation in JS. Probably just use an array or something or use a simple class implementation
+            let characterQueue = [];  // store sequence of characters shown to user
+            let difficultyLevel = 1;  // level of difficulty (n in n-back)
+            const possibleCharacters = "ABC";    // possible characters to display to user
+            const intervalTime = 2500;  // amount of time between generation of new characters (milliseconds)
+            let score = 0;
+            const matchResultElement = document.getElementById("match-result");
+            let currentIntervalID;
+
+            function delay(time) {
+                return new Promise(resolve => setTimeout(resolve, time));
+            }
+
+            function start() {
+                // Restart
+                document.getElementById("start-button").innerText = "Restart";  // convert to a restart button
+                difficultyLevel = document.getElementById("difficulty-select").value;   // reset difficulty level
+                score = 0;
+                updateScore();
+                characterQueue = [];    // reset array
+
+                // Repeatedly generate a new character
+                clearInterval(currentIntervalID);
+                currentIntervalID = setInterval(() => {
+                    generateNewCharacter();
+                }, intervalTime);
+            }
+
+            function updateScore() {
+                document.getElementById("score").innerText = `Score: ${score}`
+            }
+
+            async function generateNewCharacter() {
+                matchResultElement.style.visibility = "hidden";     // hide previous result
+                if (characterQueue.length >= difficultyLevel + 1) {
+                    // If there are n characters in the queue, dequeue. This is done to make sure that unnecessary characters aren't stored over time.
+                    characterQueue.shift()
+                }
+
+                // Add another character to the queue
+                const randomCharacter = possibleCharacters[Math.floor(Math.random() * possibleCharacters.length)]
+                characterQueue.push(randomCharacter)
+
+                // Display new character
+                const displayElement = document.getElementById("character-display");
+                displayElement.innerText = "---";   // tell user that a new character has been generated
+                await delay(500);
+                displayElement.innerText = randomCharacter;
+            }
+
+            function checkMatch() {
+                // Check if current character matches character n-back (i.e., the first character in the queue matches the last)
+                const previousCharacter = characterQueue[characterQueue.length - difficultyLevel - 1];
+                const currentCharacter = characterQueue[characterQueue.length - 1];
+                const correctMatch = previousCharacter === currentCharacter;
+
+                if (correctMatch) {
+                    score++;
+                    result = "Correct!"
+                } else {
+                    if (score > 0) {
+                        // Only decrement if score is greater than 0
+                        score--;
+                    }
+                    result = "Incorrect!"
+                }
+
+                // Update score and result message
+                updateScore();
+                matchResultElement.innerText = result;
+                matchResultElement.style.visibility = "visible";
+            }
+            
+        </script>
+    </body>
+</html>
