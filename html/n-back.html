@@ -15,7 +15,7 @@
         </p>
         <div class="card text-white bg-primary mb-3 text-center" style="max-width: 10rem; margin: auto;">
             <div class="card-header">Current letter:</div>
-            <div class="card-body" id="character-display">X</div>
+            <div class="card-body" id="character-display">---</div>
             <button class="text-center" onclick="checkMatch()">Match</button>
         </div>
 
@@ -29,10 +29,14 @@
             // Not a native queue implementation in JS. Probably just use an array or something or use a simple class implementation
             let characterQueue = [];  // store sequence of characters shown to user
             let difficultyLevel = 1;  // level of difficulty (n in n-back)
-            const possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";    // possible characters to display to user
+            const possibleCharacters = "ABCDEFG";    // possible characters to display to user
             const intervalTime = 2500;  // amount of time between generation of new characters (milliseconds)
 
-            function generateNewCharacter() {
+            function delay(time) {
+                return new Promise(resolve => setTimeout(resolve, time));
+            }
+
+            async function generateNewCharacter() {
                 if (characterQueue.length >= difficultyLevel + 1) {
                     // If there are n characters in the queue, dequeue. This is done to make sure that unnecessary characters aren't stored over time.
                     characterQueue.shift()
@@ -43,7 +47,10 @@
                 characterQueue.push(randomCharacter)
 
                 // Display new character
-                document.getElementById("character-display").innerText = randomCharacter;
+                const displayElement = document.getElementById("character-display");
+                displayElement.innerText = "---";   // tell user that a new character has been generated
+                await delay(500);
+                displayElement.innerText = randomCharacter;
             }
 
             function checkMatch() {
@@ -53,9 +60,9 @@
                 console.log(previousCharacter === currentCharacter);
             }
             
+            // Set initial state
             setInterval(() => {
-                generateNewCharacter()
-                checkMatch()
+                generateNewCharacter();
             }, intervalTime);
             
         </script>
