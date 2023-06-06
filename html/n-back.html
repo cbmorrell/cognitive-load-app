@@ -16,7 +16,7 @@
         <div class="card text-white bg-primary mb-3 text-center" style="max-width: 10rem; margin: auto;">
             <div class="card-header">Current letter:</div>
             <div class="card-body" id="character-display">X</div>
-            <button class="text-center">Match</button>
+            <button class="text-center" onclick="checkMatch()">Match</button>
         </div>
 
         <script>
@@ -26,9 +26,30 @@
             where n is the difficulty level of the test.
             */
 
+            // Not a native queue implementation in JS. Probably just use an array or something or use a simple class implementation
+            let characterQueue = [];  // store sequence of characters shown to user
+            let difficultyLevel = 1;  // level of difficulty (n in n-back)
+            const possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";    // possible characters to display to user
 
+            function generateNewCharacter() {
+                if (characterQueue.length >= difficultyLevel + 1) {
+                    // If there are n characters in the queue, dequeue
+                    characterQueue.shift()
+                }
 
+                // Add another character to the queue
+                const randomCharacter = possibleCharacters[Math.floor(Math.random() * possibleCharacters.length)]
+                characterQueue.push(randomCharacter)
 
+                // Display new character
+                document.getElementById("character-display").innerText = randomCharacter;
+            }
+
+            function checkMatch() {
+                // Check if current character matches character n-back
+            }
+
+            generateNewCharacter()
             
         </script>
     </body>
