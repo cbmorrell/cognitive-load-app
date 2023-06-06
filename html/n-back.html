@@ -30,6 +30,7 @@
             let characterQueue = [];  // store sequence of characters shown to user
             let difficultyLevel = 1;  // level of difficulty (n in n-back)
             const possibleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";    // possible characters to display to user
+            const intervalTime = 2500;  // amount of time between generation of new characters (milliseconds)
 
             function generateNewCharacter() {
                 if (characterQueue.length >= difficultyLevel + 1) {
@@ -49,8 +50,13 @@
                 // Check if current character matches character n-back (i.e., the first character in the queue matches the last)
                 const previousCharacter = characterQueue[characterQueue.length - difficultyLevel - 1];
                 const currentCharacter = characterQueue[characterQueue.length - 1];
-                return previousCharacter === currentCharacter;
+                console.log(previousCharacter === currentCharacter);
             }
+            
+            setInterval(() => {
+                generateNewCharacter()
+                checkMatch()
+            }, intervalTime);
             
         </script>
     </body>
