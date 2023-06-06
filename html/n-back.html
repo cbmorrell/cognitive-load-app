@@ -13,7 +13,7 @@
             This is a cognitive load task known as the n-back test. A new letter will be shown every couple of seconds. If the current letter matches the letter
             n characters back, please select the 'Match' button.
         </p>
-
+        
         <div style="text-align: center;">
             <form class="d-inline-block" style="display: inline-block;">
                 <label class="form-label d-inline-block" for="difficulty-select">Select difficulty:</label>
@@ -23,7 +23,7 @@
                 </select>
             </form>
         </div>
-
+        
         <div class="card text-white bg-primary mb-3 text-center mt-2" style="max-width: 10rem; margin: auto;">
             <div class="card-header">Current letter:</div>
             <div class="card-body" id="character-display">---</div>
@@ -31,7 +31,10 @@
             <div class="card-footer" id="score">Score: 0</div>
             <div class="card-footer" id="match-result"></div>
         </div>
-
+        
+        <div style="text-align: center;">
+            <button onclick="start()" id="start-button" class="text-center">Start</button>
+        </div>
         <script>
             /*
             n-back test inspired by https://n-back.irockbunnylab.com/.
@@ -46,9 +49,29 @@
             const intervalTime = 2500;  // amount of time between generation of new characters (milliseconds)
             let score = 0;
             const matchResultElement = document.getElementById("match-result");
+            let currentIntervalID;
 
             function delay(time) {
                 return new Promise(resolve => setTimeout(resolve, time));
+            }
+
+            function start() {
+                // Restart
+                document.getElementById("start-button").innerText = "Restart";  // convert to a restart button
+                difficultyLevel = document.getElementById("difficulty-select").value;   // reset difficulty level
+                score = 0;
+                updateScore();
+                characterQueue = [];    // reset array
+
+                // Repeatedly generate a new character
+                clearInterval(currentIntervalID);
+                currentIntervalID = setInterval(() => {
+                    generateNewCharacter();
+                }, intervalTime);
+            }
+
+            function updateScore() {
+                document.getElementById("score").innerText = `Score: ${score}`
             }
 
             async function generateNewCharacter() {
@@ -87,15 +110,10 @@
                 }
 
                 // Update score and result message
-                document.getElementById("score").innerText = `Score: ${score}`
+                updateScore();
                 matchResultElement.innerText = result;
                 matchResultElement.style.visibility = "visible";
             }
-            
-            // Repeatedly generate a new character
-            setInterval(() => {
-                generateNewCharacter();
-            }, intervalTime);
             
         </script>
     </body>
