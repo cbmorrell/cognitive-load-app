@@ -33,7 +33,7 @@
 
             function generateNewCharacter() {
                 if (characterQueue.length >= difficultyLevel + 1) {
-                    // If there are n characters in the queue, dequeue
+                    // If there are n characters in the queue, dequeue. This is done to make sure that unnecessary characters aren't stored over time.
                     characterQueue.shift()
                 }
 
@@ -46,10 +46,11 @@
             }
 
             function checkMatch() {
-                // Check if current character matches character n-back
+                // Check if current character matches character n-back (i.e., the first character in the queue matches the last)
+                const previousCharacter = characterQueue[characterQueue.length - difficultyLevel - 1];
+                const currentCharacter = characterQueue[characterQueue.length - 1];
+                return previousCharacter === currentCharacter;
             }
-
-            generateNewCharacter()
             
         </script>
     </body>
