@@ -13,7 +13,18 @@
             This is a cognitive load task known as the n-back test. A new letter will be shown every couple of seconds. If the current letter matches the letter
             n characters back, please select the 'Match' button.
         </p>
-        <div class="card text-white bg-primary mb-3 text-center" style="max-width: 10rem; margin: auto;">
+
+        <div style="text-align: center;">
+            <form class="d-inline-block" style="display: inline-block;">
+                <label class="form-label d-inline-block" for="difficulty-select">Select difficulty:</label>
+                <select class="form-select form-control d-inline-block" style="width: auto" name="difficulty-select" id="difficulty-select">
+                    <option>1</option>
+                    <option>2</option>
+                </select>
+            </form>
+        </div>
+
+        <div class="card text-white bg-primary mb-3 text-center mt-2" style="max-width: 10rem; margin: auto;">
             <div class="card-header">Current letter:</div>
             <div class="card-body" id="character-display">---</div>
             <button class="text-center" onclick="checkMatch()">Match</button>
