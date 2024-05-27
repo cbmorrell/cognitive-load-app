@@ -3,5 +3,4 @@ Simple web application that performs various cognitive load tests, such as Stroo
 
 
 ## Access
-This application is hosted using GitHub pages. Access it via this link:
-[https://cmorrell28.github.io/cognitive-load-app/](https://cbmorrell.github.io/cognitive-load-app/)
+This application is hosted using GitHub pages. [Click here to access it!](https://cbmorrell.github.io/cognitive-load-app/)
